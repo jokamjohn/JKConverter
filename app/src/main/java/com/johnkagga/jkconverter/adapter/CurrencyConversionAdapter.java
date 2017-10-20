@@ -50,7 +50,8 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ConversionActivity.class)
                         .putExtra(Constants.COIN_IMAGE_ID, coinImage)
-                        .putExtra(Constants.CURRENCY_SYMBOL, currencySymbol);
+                        .putExtra(Constants.CURRENCY_SYMBOL, currencySymbol)
+                        .putExtra(Constants.COIN_RATE, Float.parseFloat(conversion.getCurrencyValue()));
                 mContext.startActivity(intent);
             }
         });
