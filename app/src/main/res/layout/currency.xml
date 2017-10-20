@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_five_dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,8 +16,8 @@
             android:layout_height="@dimen/coin_image_height"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/margin_ten_dp"
             android:layout_marginBottom="@dimen/margin_ten_dp"
+            android:layout_marginTop="@dimen/margin_ten_dp"
             android:contentDescription="@string/currency_image_content_desc"
             tools:src="@drawable/ic_ethereum"/>
 

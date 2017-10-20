@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <RadioGroup
+        android:id="@+id/coin_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_ten_dp">
@@ -14,6 +15,7 @@
             android:id="@+id/btc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="@string/bit_coin"/>
 
         <RadioButton
