@@ -1,3 +1,10 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_ten_dp">10dp</dimen>
+    <dimen name="margin_five_dp">5dp</dimen>
+    <dimen name="coin_image_width">100dp</dimen>
+    <dimen name="coin_image_height">100dp</dimen>
+    <dimen name="currency_symbol">50sp</dimen>
+    <dimen name="base_currency">50sp</dimen>
+    <dimen name="currency_symbol_margin_start">80dp</dimen>
 </resources>
