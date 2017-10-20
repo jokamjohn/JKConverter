@@ -1,6 +1,7 @@
 package com.johnkagga.jkconverter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.johnkagga.jkconverter.ConversionActivity;
 import com.johnkagga.jkconverter.R;
 import com.johnkagga.jkconverter.models.CurrencyConversion;
+import com.johnkagga.jkconverter.utility.Constants;
 
 import java.util.ArrayList;
 
@@ -36,10 +39,21 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CurrencyConversion conversion = mCurrencyConversions.get(position);
-        holder.mCoinImage.setImageDrawable(ContextCompat.getDrawable(mContext, conversion.getCoinImage()));
+        final CurrencyConversion conversion = mCurrencyConversions.get(position);
+        final int coinImage = conversion.getCoinImage();
+        holder.mCoinImage.setImageDrawable(ContextCompat.getDrawable(mContext, coinImage));
         holder.mBaseCurrency.setText(conversion.getCurrencyValue());
-        holder.mCurrencySymbol.setText(conversion.getCurrencySymbol());
+        final String currencySymbol = conversion.getCurrencySymbol();
+        holder.mCurrencySymbol.setText(currencySymbol);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ConversionActivity.class)
+                        .putExtra(Constants.COIN_IMAGE_ID, coinImage)
+                        .putExtra(Constants.CURRENCY_SYMBOL, currencySymbol);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

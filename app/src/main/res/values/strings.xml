@@ -10,6 +10,7 @@
     <string name="currency_dialog_positive_text">Add</string>
     <string name="currency_dialog_negative_text">Cancel</string>
     <string name="no_available_data">Click the + button to add a currency conversion</string>
+    <string name="convert_currency">Convert</string>
 
     <string-array name="currency_list">
         <item>USD</item>
@@ -33,4 +34,7 @@
         <item>BRL</item>
         <item>TRY</item>
     </string-array>
+    <string name="title_activity_conversion">ConversionActivity</string>
+    <string name="coin_conversion_hint">Coin value</string>
+    <string name="conversion_activity_title">Coin Conversion</string>
 </resources>
