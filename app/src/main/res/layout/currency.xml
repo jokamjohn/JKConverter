@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/coin_image"
+            android:layout_width="@dimen/coin_image_width"
+            android:layout_height="@dimen/coin_image_height"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/margin_ten_dp"
+            android:layout_marginBottom="@dimen/margin_ten_dp"
+            android:contentDescription="@string/currency_image_content_desc"
+            tools:src="@drawable/ic_ethereum"/>
+
+        <TextView
+            android:id="@+id/currency_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/coin_image"
+            android:layout_marginEnd="@dimen/margin_five_dp"
+            android:layout_marginStart="@dimen/currency_symbol_margin_start"
+            android:textSize="@dimen/currency_symbol"
+            android:textStyle="bold"
+            tools:text="$"/>
+
+        <TextView
+            android:id="@+id/base_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/coin_image"
+            android:layout_marginStart="@dimen/margin_ten_dp"
+            android:layout_toEndOf="@id/currency_symbol"
+            android:maxLines="1"
+            android:textSize="@dimen/base_currency"
+            tools:text="3456.23"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
