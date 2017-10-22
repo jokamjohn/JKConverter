@@ -30,7 +30,8 @@ import okhttp3.Callback;
 import okhttp3.HttpUrl;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements ConversionDialogFragment.OnCurrencyConversion {
+public class MainActivity extends AppCompatActivity implements
+        ConversionDialogFragment.OnCurrencyConversion {
 
     private static final String CURRENCY_DIALOG = "Currency_dialog";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -105,7 +106,8 @@ public class MainActivity extends AppCompatActivity implements ConversionDialogF
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response)
+                    throws IOException {
                 if (response.isSuccessful()) {
                     JSONObject json = null;
                     try {
@@ -127,12 +129,14 @@ public class MainActivity extends AppCompatActivity implements ConversionDialogF
      * @param coin         Crypto currency
      * @param currency     Normal currency
      */
-    private void addCurrencyConversionToArrayList(final String baseCurrency, final String coin, final String currency) {
+    private void addCurrencyConversionToArrayList(final String baseCurrency, final String coin,
+                                                  final String currency) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mConversionArrayList.add(0, new CurrencyConversion(Helper.getCoinImage(coin),
-                        Helper.getCurrencySymbol(currency), baseCurrency));
+                        Helper.getCurrencySymbol(currency),
+                        Helper.formatNumbers(String.valueOf(baseCurrency))));
                 mAdapter.notifyDataSetChanged();
                 handleEmptyAdapter();
             }
