@@ -15,6 +15,7 @@ import com.johnkagga.jkconverter.ConversionActivity;
 import com.johnkagga.jkconverter.R;
 import com.johnkagga.jkconverter.models.CurrencyConversion;
 import com.johnkagga.jkconverter.utility.Constants;
+import com.johnkagga.jkconverter.utility.Helper;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class CurrencyConversionAdapter extends RecyclerView.Adapter<CurrencyConv
         final CurrencyConversion conversion = mCurrencyConversions.get(position);
         final int coinImage = conversion.getCoinImage();
         holder.mCoinImage.setImageDrawable(ContextCompat.getDrawable(mContext, coinImage));
-        holder.mBaseCurrency.setText(conversion.getCurrencyValue());
+        holder.mBaseCurrency.setText(Helper.formatNumbers(conversion.getCurrencyValue()));
         final String currencySymbol = conversion.getCurrencySymbol();
         holder.mCurrencySymbol.setText(currencySymbol);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements
                 .addQueryParameter(Constants.BASE_CURRENCY_TO_CONVERT_TO, currency);
         Helper.convert(urlBuilder.build().toString(), new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e(LOG_TAG, "Crypto API call failed " + e.getMessage());
             }
 
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements
             public void onResponse(@NonNull Call call, @NonNull Response response)
                     throws IOException {
                 if (response.isSuccessful()) {
-                    JSONObject json = null;
+                    JSONObject json;
                     try {
                         json = new JSONObject(response.body().string());
                         String baseCurrency = json.getString(currency);
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements
             public void run() {
                 mConversionArrayList.add(0, new CurrencyConversion(Helper.getCoinImage(coin),
                         Helper.getCurrencySymbol(currency),
-                        Helper.formatNumbers(String.valueOf(baseCurrency))));
+                        String.valueOf(baseCurrency)));
                 mAdapter.notifyDataSetChanged();
                 handleEmptyAdapter();
             }
