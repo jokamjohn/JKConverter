@@ -1,14 +1,24 @@
 package com.johnkagga.jkconverter.utility;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.johnkagga.jkconverter.R;
 
 import java.util.Currency;
+
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class Helper {
 
     private static final String BITCOIN = "BITCOIN";
     private static final String ETHEREUM = "ETHEREUM";
+    private static final String BTC = "BTC";
+    private static final String ETH = "ETH";
 
     /**
      * Return the currency ISO symbol.
@@ -37,4 +47,46 @@ public class Helper {
                 return R.drawable.ic_error_outline;
         }
     }
+
+    /**
+     * @param coin Crypto coin
+     * @return Coin short name
+     */
+    public static String getCoinShortName(String coin) {
+        switch (coin) {
+            case BITCOIN:
+                return BTC;
+            case ETHEREUM:
+                return ETH;
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Sends an HTTP Get request to the Cryptocompare API.
+     *
+     * @param url      API URL
+     * @param callback OKHTTP callback.
+     */
+    public static void convert(String url, Callback callback) {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * Check network and internet connectivity.
+     *
+     * @return boolean
+     */
+    public static boolean isConnected(Context context) {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
 }

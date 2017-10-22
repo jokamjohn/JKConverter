@@ -2,24 +2,38 @@ package com.johnkagga.jkconverter;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.johnkagga.jkconverter.adapter.CurrencyConversionAdapter;
 import com.johnkagga.jkconverter.dialog.ConversionDialogFragment;
 import com.johnkagga.jkconverter.models.CurrencyConversion;
+import com.johnkagga.jkconverter.utility.Constants;
 import com.johnkagga.jkconverter.utility.Helper;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements ConversionDialogFragment.OnCurrencyConversion {
 
     private static final String CURRENCY_DIALOG = "Currency_dialog";
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private ArrayList<CurrencyConversion> mConversionArrayList;
     private CurrencyConversionAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -65,11 +79,64 @@ public class MainActivity extends AppCompatActivity implements ConversionDialogF
      * @param currency Base Currency
      */
     @Override
-    public void onCurrencyAdded(String coin, String currency) {
-        mConversionArrayList.add(0, new CurrencyConversion(Helper.getCoinImage(coin),
-                Helper.getCurrencySymbol(currency), "5628"));
-        mAdapter.notifyDataSetChanged();
-        handleEmptyAdapter();
+    public void onCurrencyAdded(final String coin, final String currency) {
+        if (!Helper.isConnected(this)) {
+            Toast.makeText(this, "No internet, try again", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        getCurrencyConversionFromAPI(coin, currency);
+    }
+
+    /**
+     * Get the latest Coin and currency conversion rate from the Cryptocompare API
+     * and add them to the CurrencyConversion ArrayList.
+     *
+     * @param coin     BTC or ETH Coins
+     * @param currency Base Currency i.e USD, EUR
+     */
+    private void getCurrencyConversionFromAPI(final String coin, final String currency) {
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.CRYPTOCOMPARE_BASE_API).newBuilder();
+        urlBuilder.addQueryParameter(Constants.COIN_TYPE, Helper.getCoinShortName(coin))
+                .addQueryParameter(Constants.BASE_CURRENCY_TO_CONVERT_TO, currency);
+        Helper.convert(urlBuilder.build().toString(), new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(LOG_TAG, "Crypto API call failed " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    JSONObject json = null;
+                    try {
+                        json = new JSONObject(response.body().string());
+                        String baseCurrency = json.getString(currency);
+                        addCurrencyConversionToArrayList(baseCurrency, coin, currency);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Adds the new currency conversion from the API to the Array Adapter.
+     *
+     * @param baseCurrency Currency conversion from the API.
+     * @param coin         Crypto currency
+     * @param currency     Normal currency
+     */
+    private void addCurrencyConversionToArrayList(final String baseCurrency, final String coin, final String currency) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mConversionArrayList.add(0, new CurrencyConversion(Helper.getCoinImage(coin),
+                        Helper.getCurrencySymbol(currency), baseCurrency));
+                mAdapter.notifyDataSetChanged();
+                handleEmptyAdapter();
+            }
+        });
     }
 
     /**

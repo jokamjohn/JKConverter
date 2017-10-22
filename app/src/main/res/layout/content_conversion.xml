@@ -37,7 +37,7 @@
             tools:text="$"/>
 
         <TextView
-            android:id="@+id/base_currency"
+            android:id="@+id/base_currency_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/conversion_edit_text"

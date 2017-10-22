@@ -27,8 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@id/coin_image"
+            android:layout_marginBottom="@dimen/margin_five_dp"
             android:layout_marginEnd="@dimen/margin_five_dp"
-            android:layout_marginStart="@dimen/currency_symbol_margin_start"
+            android:layout_marginStart="@dimen/margin_ten_dp"
             android:textSize="@dimen/currency_symbol"
             android:textStyle="bold"
             tools:text="$"/>
@@ -38,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/coin_image"
+            android:layout_marginBottom="@dimen/margin_five_dp"
             android:layout_marginStart="@dimen/margin_ten_dp"
             android:layout_toEndOf="@id/currency_symbol"
             android:maxLines="1"
