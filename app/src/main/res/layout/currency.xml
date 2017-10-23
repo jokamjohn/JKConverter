@@ -7,7 +7,7 @@
     android:layout_marginBottom="@dimen/margin_five_dp"
     android:layout_marginEnd="@dimen/margin_ten_dp"
     android:layout_marginStart="@dimen/margin_ten_dp"
-    android:layout_marginTop="@dimen/margin_ten_dp">
+    android:layout_marginTop="@dimen/margin_five_dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
