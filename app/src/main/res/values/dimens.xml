@@ -7,4 +7,5 @@
     <dimen name="currency_symbol">20sp</dimen>
     <dimen name="base_currency">20sp</dimen>
     <dimen name="currency_symbol_margin_start">80dp</dimen>
+    <dimen name="text_view_start_margin">120dp</dimen>
 </resources>

@@ -32,7 +32,7 @@
             android:layout_below="@id/coin_image"
             android:layout_marginBottom="@dimen/margin_five_dp"
             android:layout_marginEnd="@dimen/margin_five_dp"
-            android:layout_marginStart="120dp"
+            android:layout_marginStart="@dimen/text_view_start_margin"
             android:textSize="@dimen/currency_symbol"
             android:textStyle="bold"
             tools:text="$"/>

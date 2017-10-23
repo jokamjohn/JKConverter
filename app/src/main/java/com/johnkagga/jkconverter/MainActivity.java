@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements
     private ArrayList<CurrencyConversion> mConversionArrayList;
     private CurrencyConversionAdapter mAdapter;
     private RecyclerView mRecyclerView;
+    private ProgressBar mProgressBar;
 
 
     @Override
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements
         mRecyclerView = findViewById(R.id.currency_recycler_view);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
+
+        mProgressBar = findViewById(R.id.progressBar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -96,18 +100,21 @@ public class MainActivity extends AppCompatActivity implements
      * @param currency Base Currency i.e USD, EUR
      */
     private void getCurrencyConversionFromAPI(final String coin, final String currency) {
+        mProgressBar.setVisibility(View.VISIBLE);
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.CRYPTOCOMPARE_BASE_API).newBuilder();
         urlBuilder.addQueryParameter(Constants.COIN_TYPE, Helper.getCoinShortName(coin))
                 .addQueryParameter(Constants.BASE_CURRENCY_TO_CONVERT_TO, currency);
         Helper.convert(urlBuilder.build().toString(), new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                hideProgressBar();
                 Log.e(LOG_TAG, "Crypto API call failed " + e.getMessage());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response)
                     throws IOException {
+                hideProgressBar();
                 if (response.isSuccessful()) {
                     JSONObject json;
                     try {
@@ -155,6 +162,18 @@ public class MainActivity extends AppCompatActivity implements
             mRecyclerView.setVisibility(View.VISIBLE);
             emptyTextView.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * Hide the progress Bar after the Http request
+     */
+    private void hideProgressBar() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mProgressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
 }
