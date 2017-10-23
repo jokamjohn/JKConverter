@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.johnkagga.jkconverter.utility.Constants;
+import com.johnkagga.jkconverter.utility.Helper;
 
 public class ConversionActivity extends AppCompatActivity {
 
@@ -53,7 +54,7 @@ public class ConversionActivity extends AppCompatActivity {
                 }
                 float baseCurrency = mCoinRate *
                         Float.parseFloat(conversionEditText.getText().toString());
-                baseCurrencyTxView.setText(String.valueOf(baseCurrency));
+                baseCurrencyTxView.setText(Helper.formatNumbers(String.valueOf(baseCurrency)));
                 currencySymbol.setVisibility(View.VISIBLE);
                 baseCurrencyTxView.setVisibility(View.VISIBLE);
             }

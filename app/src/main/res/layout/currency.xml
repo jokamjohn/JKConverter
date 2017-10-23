@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/margin_five_dp">
+    android:layout_marginBottom="@dimen/margin_five_dp"
+    android:layout_marginEnd="@dimen/margin_ten_dp"
+    android:layout_marginStart="@dimen/margin_ten_dp"
+    android:layout_marginTop="@dimen/margin_five_dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +20,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:layout_marginBottom="@dimen/margin_ten_dp"
-            android:layout_marginTop="@dimen/margin_ten_dp"
+            android:layout_marginTop="@dimen/margin_five_dp"
             android:contentDescription="@string/currency_image_content_desc"
             tools:src="@drawable/ic_ethereum"/>
 
@@ -29,7 +32,7 @@
             android:layout_below="@id/coin_image"
             android:layout_marginBottom="@dimen/margin_five_dp"
             android:layout_marginEnd="@dimen/margin_five_dp"
-            android:layout_marginStart="@dimen/margin_ten_dp"
+            android:layout_marginStart="@dimen/text_view_start_margin"
             android:textSize="@dimen/currency_symbol"
             android:textStyle="bold"
             tools:text="$"/>

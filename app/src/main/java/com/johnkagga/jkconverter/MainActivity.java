@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,13 +31,15 @@ import okhttp3.Callback;
 import okhttp3.HttpUrl;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements ConversionDialogFragment.OnCurrencyConversion {
+public class MainActivity extends AppCompatActivity implements
+        ConversionDialogFragment.OnCurrencyConversion {
 
     private static final String CURRENCY_DIALOG = "Currency_dialog";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private ArrayList<CurrencyConversion> mConversionArrayList;
     private CurrencyConversionAdapter mAdapter;
     private RecyclerView mRecyclerView;
+    private ProgressBar mProgressBar;
 
 
     @Override
@@ -50,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements ConversionDialogF
         mRecyclerView = findViewById(R.id.currency_recycler_view);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
+
+        mProgressBar = findViewById(R.id.progressBar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -95,19 +100,23 @@ public class MainActivity extends AppCompatActivity implements ConversionDialogF
      * @param currency Base Currency i.e USD, EUR
      */
     private void getCurrencyConversionFromAPI(final String coin, final String currency) {
+        mProgressBar.setVisibility(View.VISIBLE);
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.CRYPTOCOMPARE_BASE_API).newBuilder();
         urlBuilder.addQueryParameter(Constants.COIN_TYPE, Helper.getCoinShortName(coin))
                 .addQueryParameter(Constants.BASE_CURRENCY_TO_CONVERT_TO, currency);
         Helper.convert(urlBuilder.build().toString(), new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                hideProgressBar();
                 Log.e(LOG_TAG, "Crypto API call failed " + e.getMessage());
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response)
+                    throws IOException {
+                hideProgressBar();
                 if (response.isSuccessful()) {
-                    JSONObject json = null;
+                    JSONObject json;
                     try {
                         json = new JSONObject(response.body().string());
                         String baseCurrency = json.getString(currency);
@@ -127,12 +136,14 @@ public class MainActivity extends AppCompatActivity implements ConversionDialogF
      * @param coin         Crypto currency
      * @param currency     Normal currency
      */
-    private void addCurrencyConversionToArrayList(final String baseCurrency, final String coin, final String currency) {
+    private void addCurrencyConversionToArrayList(final String baseCurrency, final String coin,
+                                                  final String currency) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mConversionArrayList.add(0, new CurrencyConversion(Helper.getCoinImage(coin),
-                        Helper.getCurrencySymbol(currency), baseCurrency));
+                        Helper.getCurrencySymbol(currency),
+                        String.valueOf(baseCurrency)));
                 mAdapter.notifyDataSetChanged();
                 handleEmptyAdapter();
             }
@@ -151,6 +162,18 @@ public class MainActivity extends AppCompatActivity implements ConversionDialogF
             mRecyclerView.setVisibility(View.VISIBLE);
             emptyTextView.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * Hide the progress Bar after the Http request
+     */
+    private void hideProgressBar() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mProgressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
 }

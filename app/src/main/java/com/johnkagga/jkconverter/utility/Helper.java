@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 
 import com.johnkagga.jkconverter.R;
 
+import java.text.DecimalFormat;
 import java.util.Currency;
 
 import okhttp3.Callback;
@@ -89,4 +90,15 @@ public class Helper {
         return networkInfo != null && networkInfo.isConnected();
     }
 
+    /**
+     * Format the number by adding appropriate commas
+     *
+     * @param number Number
+     * @return String
+     */
+    public static String formatNumbers(String number) {
+        double amount = Double.parseDouble(number);
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+        return formatter.format(amount);
+    }
 }
