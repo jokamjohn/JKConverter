@@ -1,4 +1,40 @@
 <resources>
     <string name="app_name">JKConverter</string>
     <string name="action_settings">Settings</string>
+    <string name="choose_a_currency">Choose a currency</string>
+    <string name="bit_coin">BITCOIN</string>
+    <string name="ethereum">ETHEREUM</string>
+    <string name="add_conversion">Add Conversion</string>
+    <string name="currency_image_content_desc">currency image</string>
+    <string name="currency_dialog_title"><![CDATA[Choose coin & base currency]]></string>
+    <string name="currency_dialog_positive_text">Add</string>
+    <string name="currency_dialog_negative_text">Cancel</string>
+    <string name="no_available_data">Click the + button to add a currency conversion</string>
+    <string name="convert_currency">Convert</string>
+
+    <string-array name="currency_list">
+        <item>USD</item>
+        <item>EUR</item>
+        <item>GBP</item>
+        <item>UGX</item>
+        <item>KES</item>
+        <item>NGN</item>
+        <item>JPY</item>
+        <item>CNY</item>
+        <item>INR</item>
+        <item>SGD</item>
+        <item>TWD</item>
+        <item>AUD</item>
+        <item>RUB</item>
+        <item>ZAR</item>
+        <item>MXN</item>
+        <item>ILS</item>
+        <item>SEK</item>
+        <item>NOK</item>
+        <item>BRL</item>
+        <item>TRY</item>
+    </string-array>
+    <string name="title_activity_conversion">ConversionActivity</string>
+    <string name="coin_conversion_hint">Coin value</string>
+    <string name="conversion_activity_title">Coin Conversion</string>
 </resources>
