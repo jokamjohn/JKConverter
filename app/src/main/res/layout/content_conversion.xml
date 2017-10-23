@@ -67,7 +67,6 @@
                 android:layout_margin="@dimen/margin_ten_dp"
                 android:background="@drawable/button_background"
                 android:text="@string/convert_currency"
-                android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"/>
 
@@ -81,7 +80,7 @@
                 android:hint="@string/coin_conversion_hint"
                 android:inputType="numberDecimal"
                 android:maxLines="1"
-                android:textSize="30sp"/>
+                android:textSize="20sp"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </android.support.v4.widget.NestedScrollView>
